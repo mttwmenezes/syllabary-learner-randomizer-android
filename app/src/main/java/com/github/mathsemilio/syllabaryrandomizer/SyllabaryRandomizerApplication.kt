@@ -17,18 +17,15 @@ limitations under the License.
 package com.github.mathsemilio.syllabaryrandomizer
 
 import android.app.Application
-import com.google.android.gms.ads.MobileAds
 import com.github.mathsemilio.syllabaryrandomizer.common.di.CompositionRoot
 
 class SyllabaryRandomizerApplication : Application() {
 
     lateinit var compositionRoot: CompositionRoot
+        private set
 
     override fun onCreate() {
         super.onCreate()
-
-        MobileAds.initialize(this)
-
         compositionRoot = CompositionRoot(this)
     }
 }

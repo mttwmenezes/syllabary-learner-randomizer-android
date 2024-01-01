@@ -54,12 +54,6 @@ class ActivityCompositionRoot(
         ToolbarVisibilityManager()
     }
 
-    val activity
-        get() = appCompatActivity
-
-    val adRequest
-        get() = compositionRoot.adRequest
-
     val application
         get() = compositionRoot.application
 

@@ -21,23 +21,16 @@ import com.github.mathsemilio.syllabaryrandomizer.domain.eventchannel.GameEventC
 import com.github.mathsemilio.syllabaryrandomizer.domain.backend.GameBackend
 import com.github.mathsemilio.syllabaryrandomizer.others.notification.TrainingNotificationScheduler
 import com.github.mathsemilio.syllabaryrandomizer.others.soundeffects.syllabary.SyllabarySoundsPlayer
-import com.github.mathsemilio.syllabaryrandomizer.ui.common.helper.InterstitialAdHelper
 import com.github.mathsemilio.syllabaryrandomizer.ui.common.manager.DialogManager
 import com.github.mathsemilio.syllabaryrandomizer.ui.common.manager.MessagesManager
 
 class ControllerCompositionRoot(private val activityCompositionRoot: ActivityCompositionRoot) {
-
-    private val activity
-        get() = activityCompositionRoot.activity
 
     private val application
         get() = activityCompositionRoot.application
 
     private val fragmentManager
         get() = activityCompositionRoot.fragmentManager
-
-    val adRequest
-        get() = activityCompositionRoot.adRequest
 
     val gameEventChannel
         get() = GameEventChannel(GameBackend())
@@ -53,9 +46,6 @@ class ControllerCompositionRoot(private val activityCompositionRoot: ActivityCom
 
     val eventSubscriber
         get() = activityCompositionRoot.eventSubscriber
-
-    val interstitialAdHelper
-        get() = InterstitialAdHelper(application, adRequest, activity)
 
     val messagesManager
         get() = MessagesManager(application)

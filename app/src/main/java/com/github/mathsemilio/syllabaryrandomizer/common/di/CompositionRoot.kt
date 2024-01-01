@@ -17,7 +17,6 @@ limitations under the License.
 package com.github.mathsemilio.syllabaryrandomizer.common.di
 
 import android.app.Application
-import com.google.android.gms.ads.AdRequest
 import com.github.mathsemilio.syllabaryrandomizer.common.eventbus.EventBus
 import com.github.mathsemilio.syllabaryrandomizer.common.eventbus.EventPublisher
 import com.github.mathsemilio.syllabaryrandomizer.common.eventbus.EventSubscriber
@@ -26,10 +25,6 @@ class CompositionRoot(val application: Application) {
 
     private val eventBus by lazy {
         EventBus()
-    }
-
-    val adRequest: AdRequest by lazy {
-        AdRequest.Builder().build()
     }
 
     val eventPublisher by lazy {

@@ -75,5 +75,3 @@ const val ILLEGAL_GAME_DIFFICULTY_VALUE = "Invalid game difficulty value"
 const val ILLEGAL_APP_THEME_VALUE = "Invalid app theme value"
 const val ILLEGAL_FLAVOR_LITERAL = "Unknown flavor literal"
 const val NULL_DIFFICULTY = "Difficulty cannot be null"
-
-const val INTERSTITIAL_TEST_AD_ID = "ca-app-pub-3940256099942544/1033173712"
