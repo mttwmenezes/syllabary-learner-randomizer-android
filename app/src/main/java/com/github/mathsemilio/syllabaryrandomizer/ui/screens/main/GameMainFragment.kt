@@ -31,7 +31,6 @@ import com.github.mathsemilio.syllabaryrandomizer.others.soundeffects.player.Sou
 import com.github.mathsemilio.syllabaryrandomizer.others.soundeffects.syllabary.SyllabarySoundsPlayer
 import com.github.mathsemilio.syllabaryrandomizer.storage.manager.PreferencesManager
 import com.github.mathsemilio.syllabaryrandomizer.ui.common.BaseFragment
-import com.github.mathsemilio.syllabaryrandomizer.ui.common.helper.InterstitialAdHelper
 import com.github.mathsemilio.syllabaryrandomizer.ui.common.manager.DialogManager
 import com.github.mathsemilio.syllabaryrandomizer.ui.common.navigation.ScreensNavigator
 import com.github.mathsemilio.syllabaryrandomizer.ui.common.provider.BackPressedCallbackProvider
@@ -43,7 +42,6 @@ import com.github.mathsemilio.syllabaryrandomizer.ui.screens.main.view.GameMainS
 class GameMainFragment : BaseFragment(),
     GameMainScreenView.Listener,
     GameEventChannelListener,
-    InterstitialAdHelper.Listener,
     EventListener {
 
     companion object {
@@ -68,8 +66,6 @@ class GameMainFragment : BaseFragment(),
 
     private lateinit var eventSubscriber: EventSubscriber
 
-    private lateinit var interstitialAdHelper: InterstitialAdHelper
-
     private lateinit var difficulty: GameDifficulty
     private lateinit var selectedRomanization: String
 
@@ -89,8 +85,6 @@ class GameMainFragment : BaseFragment(),
         dialogManager = compositionRoot.dialogManager
 
         eventSubscriber = compositionRoot.eventSubscriber
-
-        interstitialAdHelper = compositionRoot.interstitialAdHelper
 
         setupSoundEffectsPlayer()
         setupSyllabarySoundsPlayer()
@@ -144,7 +138,7 @@ class GameMainFragment : BaseFragment(),
             if (eventChannel.currentScore == PERFECT_SCORE)
                 preferencesManager.incrementPerfectScoresAchieved()
 
-            interstitialAdHelper.showInterstitialAd()
+            screensNavigator.toResultScreen(difficulty, eventChannel.currentScore)
         } else {
             eventChannel.updateSymbol()
         }
@@ -230,14 +224,6 @@ class GameMainFragment : BaseFragment(),
         dialogManager.showTimeOverDialog(eventChannel.currentSymbol.romanization)
     }
 
-    override fun onAdDismissed() {
-        screensNavigator.toResultScreen(difficulty, eventChannel.currentScore)
-    }
-
-    override fun onShowAdFailed() {
-        screensNavigator.toResultScreen(difficulty, eventChannel.currentScore)
-    }
-
     override fun onEvent(event: Any) {
         when (event) {
             is PromptDialogEvent -> handlePromptDialogEvent(event)
@@ -286,7 +272,6 @@ class GameMainFragment : BaseFragment(),
         super.onStart()
         view.addListener(this)
         eventSubscriber.subscribe(this)
-        interstitialAdHelper.addListener(this)
     }
 
     override fun onResume() {
@@ -309,7 +294,6 @@ class GameMainFragment : BaseFragment(),
         super.onStop()
         view.removeListener(this)
         eventSubscriber.unsubscribe(this)
-        interstitialAdHelper.removeListener(this)
     }
 
     override fun onDestroyView() {
