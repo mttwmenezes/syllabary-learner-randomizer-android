@@ -6,13 +6,11 @@ plugins {
 android {
     namespace 'com.github.mathsemilio.syllabaryrandomizer'
 
-    compileSdkVersion 32
-    buildToolsVersion "30.0.3"
-
     defaultConfig {
         applicationId "com.github.mathsemilio.syllabaryrandomizer"
         minSdkVersion 21
-        targetSdkVersion 32
+        targetSdkVersion 34
+        compileSdk 34
         versionCode 23
         versionName "stable-1.0.9"
     }
@@ -30,7 +28,7 @@ android {
         }
     }
 
-    flavorDimensions "japanese-syllabary"
+    flavorDimensions = ["japanese-syllabary"]
     productFlavors {
         hiragana {
             dimension "japanese-syllabary"
