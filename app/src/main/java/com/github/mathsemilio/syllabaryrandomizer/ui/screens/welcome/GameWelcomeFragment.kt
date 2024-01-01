@@ -25,14 +25,11 @@ import com.github.mathsemilio.syllabaryrandomizer.domain.model.game.GameDifficul
 import com.github.mathsemilio.syllabaryrandomizer.others.soundeffects.player.SoundEffectsPlayer
 import com.github.mathsemilio.syllabaryrandomizer.storage.manager.PreferencesManager
 import com.github.mathsemilio.syllabaryrandomizer.ui.common.BaseFragment
-import com.github.mathsemilio.syllabaryrandomizer.ui.common.helper.InterstitialAdHelper
 import com.github.mathsemilio.syllabaryrandomizer.ui.common.navigation.ScreensNavigator
 import com.github.mathsemilio.syllabaryrandomizer.ui.screens.welcome.view.GameWelcomeScreenView
 import com.github.mathsemilio.syllabaryrandomizer.ui.screens.welcome.view.GameWelcomeScreenViewImpl
 
-class GameWelcomeFragment : BaseFragment(),
-    GameWelcomeScreenView.Listener,
-    InterstitialAdHelper.Listener {
+class GameWelcomeFragment : BaseFragment(), GameWelcomeScreenView.Listener {
 
     companion object {
         @JvmStatic
@@ -45,8 +42,6 @@ class GameWelcomeFragment : BaseFragment(),
     private lateinit var soundEffectsPlayer: SoundEffectsPlayer
     private lateinit var screensNavigator: ScreensNavigator
 
-    private lateinit var interstitialAdHelper: InterstitialAdHelper
-
     private var difficulty: GameDifficulty? = null
 
     private var defaultDifficultyValue: String = SHOW_DIFFICULTY_OPTIONS
@@ -55,10 +50,7 @@ class GameWelcomeFragment : BaseFragment(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         screensNavigator = compositionRoot.screensNavigator
-
-        interstitialAdHelper = compositionRoot.interstitialAdHelper
     }
 
     override fun onCreateView(
@@ -126,30 +118,16 @@ class GameWelcomeFragment : BaseFragment(),
         if (isSoundEffectsEnabled)
             soundEffectsPlayer.playButtonClickSoundEffect()
 
-        interstitialAdHelper.showInterstitialAd()
-    }
-
-    override fun onAdDismissed() {
-        navigateToMainScreen()
-    }
-
-    private fun navigateToMainScreen() {
         screensNavigator.toMainScreen(difficulty ?: throw RuntimeException(NULL_DIFFICULTY))
-    }
-
-    override fun onShowAdFailed() {
-        navigateToMainScreen()
     }
 
     override fun onStart() {
         super.onStart()
         view.addListener(this)
-        interstitialAdHelper.addListener(this)
     }
 
     override fun onStop() {
         super.onStop()
         view.removeListener(this)
-        interstitialAdHelper.removeListener(this)
     }
 }
