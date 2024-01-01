@@ -20,8 +20,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.view.isVisible
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.github.mathsemilio.syllabaryrandomizer.R
 import com.github.mathsemilio.syllabaryrandomizer.common.ILLEGAL_GAME_DIFFICULTY_VALUE
@@ -40,8 +38,6 @@ class GameResultScreenViewImpl(
     private lateinit var fabHome: FloatingActionButton
     private lateinit var fabPlayAgain: FloatingActionButton
     private lateinit var fabShare: FloatingActionButton
-
-    private lateinit var adViewGameResultScreen: AdView
 
     private lateinit var difficulty: GameDifficulty
 
@@ -63,8 +59,6 @@ class GameResultScreenViewImpl(
         fabHome = findViewById(R.id.fab_home)
         fabPlayAgain = findViewById(R.id.fab_play_again)
         fabShare = findViewById(R.id.fab_share)
-
-        adViewGameResultScreen = findViewById(R.id.adview_game_result_screen)
     }
 
     private fun attachHomeButtonOnClickListener() {
@@ -126,9 +120,5 @@ class GameResultScreenViewImpl(
 
     private fun setupPerfectScoresAchievedTextView(perfectScores: Int) {
         textViewPerfectScoresAchieved.text = perfectScores.toString()
-    }
-
-    override fun loadAdBanner(adRequest: AdRequest) {
-        adViewGameResultScreen.loadAd(adRequest)
     }
 }

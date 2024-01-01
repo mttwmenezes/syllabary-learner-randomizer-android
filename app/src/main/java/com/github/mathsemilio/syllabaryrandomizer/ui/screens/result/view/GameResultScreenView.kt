@@ -16,7 +16,6 @@ limitations under the License.
 
 package com.github.mathsemilio.syllabaryrandomizer.ui.screens.result.view
 
-import com.google.android.gms.ads.AdRequest
 import com.github.mathsemilio.syllabaryrandomizer.domain.model.game.GameDifficulty
 import com.github.mathsemilio.syllabaryrandomizer.ui.common.view.BaseObservableView
 
@@ -35,6 +34,4 @@ abstract class GameResultScreenView : BaseObservableView<GameResultScreenView.Li
     abstract fun bindDifficulty(difficulty: GameDifficulty)
 
     abstract fun bindPerfectScores(perfectScores: Int)
-
-    abstract fun loadAdBanner(adRequest: AdRequest)
 }

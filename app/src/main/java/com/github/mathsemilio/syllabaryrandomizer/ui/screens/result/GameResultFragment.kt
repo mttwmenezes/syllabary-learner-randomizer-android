@@ -21,7 +21,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.google.android.gms.ads.AdRequest
 import com.github.mathsemilio.syllabaryrandomizer.R
 import com.github.mathsemilio.syllabaryrandomizer.common.ARG_DIFFICULTY
 import com.github.mathsemilio.syllabaryrandomizer.common.ARG_SCORE
@@ -54,8 +53,6 @@ class GameResultFragment : BaseFragment(), GameResultScreenView.Listener {
     private lateinit var soundEffectsPlayer: SoundEffectsPlayer
     private lateinit var screensNavigator: ScreensNavigator
 
-    private lateinit var adRequest: AdRequest
-
     private lateinit var difficulty: GameDifficulty
     private var finalScore = 0
 
@@ -67,8 +64,6 @@ class GameResultFragment : BaseFragment(), GameResultScreenView.Listener {
         backPressedCallbackProvider = compositionRoot.backPressedCallbackProvider
         preferencesManager = compositionRoot.preferencesManager
         screensNavigator = compositionRoot.screensNavigator
-
-        adRequest = compositionRoot.adRequest
 
         setupSoundEffectsPlayer()
     }
