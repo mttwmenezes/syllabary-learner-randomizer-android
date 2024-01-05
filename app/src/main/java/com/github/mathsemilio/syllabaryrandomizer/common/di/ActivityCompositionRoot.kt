@@ -24,11 +24,16 @@ import com.github.mathsemilio.syllabaryrandomizer.ui.common.delegate.FragmentCon
 import com.github.mathsemilio.syllabaryrandomizer.ui.common.manager.ToolbarVisibilityManager
 import com.github.mathsemilio.syllabaryrandomizer.ui.common.navigation.FragmentTransactionManager
 import com.github.mathsemilio.syllabaryrandomizer.ui.common.navigation.ScreensNavigator
+import com.github.mathsemilio.syllabaryrandomizer.ui.common.permission.PermissionHandler
 
 class ActivityCompositionRoot(
     private val appCompatActivity: AppCompatActivity,
     private val compositionRoot: CompositionRoot
 ) {
+   val permissionHandler by lazy {
+       PermissionHandler(appCompatActivity)
+   }
+
     val preferencesManager by lazy {
         PreferencesManager(application)
     }

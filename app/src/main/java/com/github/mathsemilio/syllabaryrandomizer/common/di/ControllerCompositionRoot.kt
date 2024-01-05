@@ -50,6 +50,9 @@ class ControllerCompositionRoot(private val activityCompositionRoot: ActivityCom
     val messagesManager
         get() = MessagesManager(application)
 
+    val permissionHandler
+        get() = activityCompositionRoot.permissionHandler
+
     val preferencesManager
         get() = activityCompositionRoot.preferencesManager
 

@@ -23,6 +23,7 @@ import com.github.mathsemilio.syllabaryrandomizer.ui.common.delegate.FragmentCon
 import com.github.mathsemilio.syllabaryrandomizer.ui.common.manager.AppThemeManager
 import com.github.mathsemilio.syllabaryrandomizer.ui.common.manager.ToolbarVisibilityManager
 import com.github.mathsemilio.syllabaryrandomizer.ui.common.navigation.ScreensNavigator
+import com.github.mathsemilio.syllabaryrandomizer.ui.common.permission.PermissionHandler
 import com.github.mathsemilio.syllabaryrandomizer.ui.screens.container.view.MainActivityView
 import com.github.mathsemilio.syllabaryrandomizer.ui.screens.container.view.MainActivityViewImpl
 
@@ -34,6 +35,7 @@ class MainActivity : BaseActivity(),
     private lateinit var view: MainActivityView
 
     private lateinit var toolbarVisibilityManager: ToolbarVisibilityManager
+    private lateinit var permissionHandler: PermissionHandler
     private lateinit var screensNavigator: ScreensNavigator
     private lateinit var appThemeManager: AppThemeManager
 
@@ -42,6 +44,7 @@ class MainActivity : BaseActivity(),
 
         view = MainActivityViewImpl(layoutInflater, parent = null)
 
+        permissionHandler = compositionRoot.permissionHandler
         toolbarVisibilityManager = compositionRoot.toolbarVisibilityManager
         screensNavigator = compositionRoot.screensNavigator
         appThemeManager = compositionRoot.appThemeManager
@@ -64,6 +67,15 @@ class MainActivity : BaseActivity(),
     override fun onShowToolbar() = view.showToolbar()
 
     override fun onHideToolbar() = view.hideToolbar()
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        permissionHandler.onRequestPermissionResult(requestCode, permissions, grantResults)
+    }
 
     override fun onStart() {
         super.onStart()

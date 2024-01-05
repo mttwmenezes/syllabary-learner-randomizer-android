@@ -16,6 +16,7 @@ limitations under the License.
 
 package com.github.mathsemilio.syllabaryrandomizer.ui.screens.settings
 
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.preference.ListPreference
@@ -33,12 +34,16 @@ import com.github.mathsemilio.syllabaryrandomizer.ui.common.BasePreferenceFragme
 import com.github.mathsemilio.syllabaryrandomizer.ui.common.manager.DialogManager
 import com.github.mathsemilio.syllabaryrandomizer.ui.common.manager.MessagesManager
 import com.github.mathsemilio.syllabaryrandomizer.ui.common.manager.ToolbarVisibilityManager
+import com.github.mathsemilio.syllabaryrandomizer.ui.common.permission.PermissionRequestResult
+import com.github.mathsemilio.syllabaryrandomizer.ui.common.permission.PermissionHandler
+import com.github.mathsemilio.syllabaryrandomizer.ui.common.permission.Permission
 import com.github.mathsemilio.syllabaryrandomizer.ui.dialog.prompt.PromptDialogEvent
 import com.github.mathsemilio.syllabaryrandomizer.ui.dialog.timepicker.TimePickerDialog
 import com.github.mathsemilio.syllabaryrandomizer.ui.dialog.timepicker.TimePickerDialogEvent
 
 class SettingsFragment : BasePreferenceFragment(),
     TrainingNotificationScheduler.Listener,
+    PermissionHandler.Listener,
     EventListener {
 
     companion object {
@@ -49,6 +54,7 @@ class SettingsFragment : BasePreferenceFragment(),
     private lateinit var trainingNotificationScheduler: TrainingNotificationScheduler
     private lateinit var toolbarVisibilityManager: ToolbarVisibilityManager
     private lateinit var preferencesManager: PreferencesManager
+    private lateinit var permissionHandler: PermissionHandler
     private lateinit var messagesManager: MessagesManager
     private lateinit var dialogManager: DialogManager
 
@@ -76,6 +82,7 @@ class SettingsFragment : BasePreferenceFragment(),
         trainingNotificationScheduler = compositionRoot.trainingNotificationScheduler
         toolbarVisibilityManager = compositionRoot.toolbarVisibilityManager
         preferencesManager = compositionRoot.preferencesManager
+        permissionHandler = compositionRoot.permissionHandler
         messagesManager = compositionRoot.messagesManager
         dialogManager = compositionRoot.dialogManager
 
@@ -107,6 +114,7 @@ class SettingsFragment : BasePreferenceFragment(),
                     )
                 }
             }
+
             false -> {
                 trainingNotificationPreference.apply {
                     isChecked = false
@@ -152,18 +160,30 @@ class SettingsFragment : BasePreferenceFragment(),
         }
     }
 
-    private fun onTrainingNotificationPreferenceClick() =
-        when (trainingNotificationPreference.isChecked) {
-            true -> timePickerDialog = dialogManager.showTimePickerDialog()
-            false -> {
-                trainingNotificationPreference.title =
-                    getString(R.string.preference_title_training_reminder_unchecked)
+    private fun onTrainingNotificationPreferenceClick() {
+        if (trainingNotificationPreference.isChecked) {
+            checkForPostNotificationsPermission()
+        } else {
+            trainingNotificationPreference.title =
+                getString(R.string.preference_title_training_reminder_unchecked)
 
-                preferencesManager.trainingNotificationSwitchState = false
+            preferencesManager.trainingNotificationSwitchState = false
 
-                trainingNotificationScheduler.cancel()
-            }
+            trainingNotificationScheduler.cancel()
         }
+    }
+
+    private fun checkForPostNotificationsPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (permissionHandler.hasPermission(Permission.POST_NOTIFICATIONS)) {
+                timePickerDialog = dialogManager.showTimePickerDialog()
+            } else {
+                permissionHandler.request(Permission.POST_NOTIFICATIONS)
+            }
+        } else {
+            timePickerDialog = dialogManager.showTimePickerDialog()
+        }
+    }
 
     override fun onTrainingNotificationScheduled(timeSetByUser: Long) {
         trainingNotificationPreference.apply {
@@ -190,6 +210,24 @@ class SettingsFragment : BasePreferenceFragment(),
         messagesManager.showTrainingReminderSetFailedMessage()
     }
 
+    override fun onPermissionRequestResult(result: PermissionRequestResult) {
+        when (result) {
+            PermissionRequestResult.GRANTED -> {
+                timePickerDialog = dialogManager.showTimePickerDialog()
+            }
+
+            PermissionRequestResult.DENIED -> {
+                dialogManager.showPostNotificationDeniedDialog()
+                trainingNotificationPreference.isChecked = false
+            }
+
+            PermissionRequestResult.DENIED_PERMANENTLY -> {
+                dialogManager.showPostNotificationDeniedPermanentlyDialog()
+                trainingNotificationPreference.isChecked = false
+            }
+        }
+    }
+
     override fun onEvent(event: Any) {
         when (event) {
             is TimePickerDialogEvent -> handleTimePickerDialogEvent(event)
@@ -201,6 +239,7 @@ class SettingsFragment : BasePreferenceFragment(),
         when (event) {
             is TimePickerDialogEvent.TimeSet ->
                 trainingNotificationScheduler.schedule(event.timeSetInMillis)
+
             TimePickerDialogEvent.Dismissed ->
                 trainingNotificationPreference.isChecked = false
         }
@@ -212,6 +251,7 @@ class SettingsFragment : BasePreferenceFragment(),
                 preferencesManager.clearPerfectScoresAchieved()
                 findPreference<Preference>(CLEAR_PERFECT_SCORES_PREFERENCE_KEY)?.isVisible = false
             }
+
             PromptDialogEvent.NegativeButtonClicked -> { /* no-op - No action required */ }
         }
     }
@@ -229,6 +269,7 @@ class SettingsFragment : BasePreferenceFragment(),
     override fun onStart() {
         super.onStart()
         trainingNotificationScheduler.addListener(this)
+        permissionHandler.addListener(this)
         eventSubscriber.subscribe(this)
     }
 
@@ -242,5 +283,6 @@ class SettingsFragment : BasePreferenceFragment(),
         eventSubscriber.unsubscribe(this)
         toolbarVisibilityManager.hideToolbar()
         trainingNotificationScheduler.removeListener(this)
+        permissionHandler.removeListener(this)
     }
 }

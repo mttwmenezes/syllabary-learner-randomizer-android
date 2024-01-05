@@ -1,5 +1,4 @@
 <resources>
-
     <string name="app_name" translatable="false">Katakana Randomizer</string>
 
     <!-- Toolbar title string -->
@@ -62,10 +61,18 @@
     <!-- Default difficulty dialog strings -->
     <string name="difficulty_entry_default">Choose before starting the game</string>
 
+    <!-- Grant notification permission dialog strings -->
+    <string name="post_notifications_dialog_title">Grant permission</string>
+    <string name="post_notifications_dialog_message">In order to receive training reminders, we need to be able to send notifications.</string>
+    <string name="post_notifications_dialog_button_text">OK</string>
+
+    <!-- Grant notification permission manually dialog strings -->
+    <string name="post_notification_manually_dialog_message">To enable this feature, you need to grant notifications permission in your device settings.</string>
+
     <!-- Clear perfect scores dialog strings -->
-    <string name="clear_perfect_score_dialog_title">Are you sure?</string>
-    <string name="clear_perfect_score_dialog_message">This action cannot be undone.</string>
-    <string name="clear_perfect_score_dialog_positive_button_text">Clear</string>
+    <string name="clear_perfect_scores_dialog_title">Are you sure?</string>
+    <string name="clear_perfect_scores_dialog_message">This action cannot be undone.</string>
+    <string name="clear_perfect_scores_dialog_positive_button_text">Clear</string>
 
     <!-- App theme dialog strings -->
     <string name="app_theme_dialog_option_follow_system">Follow System\'s settings</string>

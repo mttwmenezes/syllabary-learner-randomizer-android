@@ -21,6 +21,7 @@ import androidx.fragment.app.FragmentManager
 import com.github.mathsemilio.syllabaryrandomizer.R
 import com.github.mathsemilio.syllabaryrandomizer.common.*
 import com.github.mathsemilio.syllabaryrandomizer.common.util.getDialogTag
+import com.github.mathsemilio.syllabaryrandomizer.ui.dialog.info.InfoDialog
 import com.github.mathsemilio.syllabaryrandomizer.ui.dialog.prompt.builder.SingleOptionPromptDialogBuilder
 import com.github.mathsemilio.syllabaryrandomizer.ui.dialog.prompt.builder.TwoOptionPromptDialogBuilder
 import com.github.mathsemilio.syllabaryrandomizer.ui.dialog.theme.ThemeDialog
@@ -116,5 +117,25 @@ class DialogManager(
         val timePickerDialog = TimePickerDialog()
         timePickerDialog.show(fragmentManager, null)
         return timePickerDialog
+    }
+
+    fun showPostNotificationDeniedDialog() {
+        val dialog = InfoDialog.newInstance(
+            context.getString(R.string.post_notifications_dialog_title),
+            context.getString(R.string.post_notifications_dialog_message),
+            context.getString(R.string.post_notifications_dialog_button_text)
+        )
+
+        dialog.show(fragmentManager, null)
+    }
+
+    fun showPostNotificationDeniedPermanentlyDialog() {
+        val dialog = InfoDialog.newInstance(
+            context.getString(R.string.post_notifications_dialog_title),
+            context.getString(R.string.post_notification_manually_dialog_message),
+            context.getString(R.string.post_notifications_dialog_button_text)
+        )
+
+        dialog.show(fragmentManager, null)
     }
 }
