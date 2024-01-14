@@ -1,16 +1,13 @@
 # Syllabary Learner Randomizer
 Japanese syllabary quiz application for Android.
 
+[![Syllabary-Randomizer-Git-README-image.png](https://i.postimg.cc/fbsSG2St/Syllabary-Randomizer-Git-README-image.png)](https://postimg.cc/68HQRh0t)
+
 ## Features
 - Difficulty selection
 - Training reminders
 - Perfect scores counter
 - In-quiz syllabary sounds
-
-## Screenshots
-<img src="https://i.postimg.cc/15hF14Hr/hiragana-welcome.png" alt="hiragana-welcome" width="200"/>
-<img src="https://i.postimg.cc/3wZMYtzF/hiragana-inquiz.png" alt="hiragana-inquiz" width="200"/>
-<img src="https://i.postimg.cc/G26y2p1r/hiragana-result.png" alt="hiragana-result" width="200"/>
 
 ## Project organization
 This projects uses *Product flavors*. There are two of them: Hiragana and Katakana. The code in the main
