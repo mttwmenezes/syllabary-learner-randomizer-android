@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <PreferenceCategory android:title="@string/preference_category_title_training_reminder">
+
+        <SwitchPreferenceCompat
+            app:icon="@drawable/ic_notifications"
+            app:key="TRAINING_NOTIFICATION_PREFERENCE"
+            app:title="@string/preference_title_training_reminder_unchecked" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/preference_category_title_game_options">
+
+        <ListPreference
+            app:dialogTitle="@string/alert_dialog_title_select_an_option_below"
+            app:entries="@array/difficulty_value_entries"
+            app:entryValues="@array/difficulty_entry_values"
+            app:icon="@drawable/ic_stacked_bar_chart"
+            app:key="DEFAULT_GAME_DIFFICULTY_PREFERENCE"
+            app:title="@string/preference_title_default_difficulty" />
+
+        <Preference
+            app:icon="@drawable/ic_score"
+            app:key="CLEAR_PERFECT_SCORES_PREFERENCE"
+            app:title="@string/preference_title_clear_perfect_scores"
+            tools:summary="Perfect scores achieved: 6" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/preference_category_title_sounds">
+
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            app:icon="@drawable/ic_volume_up"
+            app:key="SOUND_EFFECTS_PREFERENCE"
+            app:title="@string/preference_title_sound_effects" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            app:icon="@drawable/ic_record_voice_over"
+            app:key="SYLLABARY_SOUNDS_PREFERENCE"
+            app:title="@string/preference_title_syllabary_sounds" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/preference_category_title_theme">
+
+        <Preference
+            app:icon="@drawable/ic_brightness_medium"
+            app:key="THEME_PREFERENCE"
+            app:summary="@string/preference_summary_theme"
+            app:title="@string/preference_title_theme" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/preference_category_title_about">
+
+        <Preference
+            app:icon="@drawable/ic_info"
+            app:key="APP_BUILD_PREFERENCE"
+            app:title="@string/preference_title_version" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

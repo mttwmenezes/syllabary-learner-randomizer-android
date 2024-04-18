@@ -1,0 +1,89 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+}
+
+android {
+    namespace 'com.github.mathsemilio.syllabaryrandomizer'
+
+    defaultConfig {
+        applicationId "com.github.mathsemilio.syllabaryrandomizer"
+        minSdkVersion 21
+        targetSdkVersion 34
+        compileSdk 34
+        versionCode 23
+        versionName "stable-1.0.9"
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+            applicationIdSuffix ".dev"
+        }
+
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    flavorDimensions = ["japanese-syllabary"]
+    productFlavors {
+        hiragana {
+            dimension "japanese-syllabary"
+            applicationIdSuffix ".hiragana"
+            versionCode 23
+            versionName "stable-1.0.9"
+        }
+
+        katakana {
+            dimension "japanese-syllabary"
+            applicationIdSuffix ".katakana"
+            versionCode 15
+            versionName "stable-1.0.4"
+        }
+    }
+
+    sourceSets {
+        katakana {
+            res {
+                srcDirs 'src/katakana/res'
+            }
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
+    lint {
+        checkReleaseBuilds false
+    }
+}
+
+dependencies {
+    def preference_version = "1.2.1"
+    def work_manager_version = "2.9.0"
+    def lottie_version = "5.0.3"
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'androidx.core:core-ktx:1.12.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.11.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+
+    // AndroidX Preference
+    implementation "androidx.preference:preference-ktx:$preference_version"
+
+    // WorkManager
+    implementation "androidx.work:work-runtime-ktx:$work_manager_version"
+
+    // Lottie
+    implementation "com.airbnb.android:lottie:$lottie_version"
+}
