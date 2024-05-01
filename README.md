@@ -16,8 +16,8 @@ and choose `katakanaDebug`.
 
 ## Development technologies
 Libraries/Frameworks used:
-- <a href="https://developer.android.com/guide/topics/ui/settings">AndroidX Preference</a>
 - <a href="https://developer.android.com/topic/libraries/architecture/workmanager/basics">WorkManager</a>
+- <a href="https://developer.android.com/guide/topics/ui/settings">AndroidX Preference</a>
 - <a href="https://github.com/airbnb/lottie-android">Lottie</a>
 
 ## License
